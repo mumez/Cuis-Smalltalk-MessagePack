@@ -1,6 +1,7 @@
-'From Cuis 4.2 of 25 July 2013 [latest update: #1969] on 26 March 2014 at 3:17:53.7658 pm'!
+'From Cuis 4.2 of 25 July 2013 [latest update: #1969] on 29 April 2014 at 10:45:16.746456 pm'!
 'Description Please enter a description for this package'!
-!provides: 'MessagePack-Cuis-Core' 1 4!
+!provides: 'MessagePack-Cuis-Core' 1 6!
+!requires: 'MessagePack-Core' 1 1 nil!
 !classDefinition: #MpCuisPortableUtil category: #'MessagePack-Cuis-Core'!
 MpPortableUtil subclass: #MpCuisPortableUtil
 	instanceVariableNames: ''

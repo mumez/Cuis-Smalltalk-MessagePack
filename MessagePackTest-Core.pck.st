@@ -1,6 +1,7 @@
-'From Cuis 4.2 of 25 July 2013 [latest update: #1969] on 26 March 2014 at 2:53:24.278436 pm'!
+'From Cuis 4.2 of 25 July 2013 [latest update: #1969] on 29 April 2014 at 10:45:18.976195 pm'!
 'Description Please enter a description for this package'!
-!provides: 'MessagePackTest-Core' 1 0!
+!provides: 'MessagePackTest-Core' 1 2!
+!requires: 'MessagePack-Core' 1 1 nil!
 !classDefinition: #MpTestCase category: #'MessagePackTest-Core'!
 TestCase subclass: #MpTestCase
 	instanceVariableNames: ''

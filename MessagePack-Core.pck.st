@@ -1,6 +1,6 @@
-'From Cuis 4.2 of 25 July 2013 [latest update: #1969] on 26 March 2014 at 2:53:20.048436 pm'!
+'From Cuis 4.2 of 25 July 2013 [latest update: #2336] on 27 May 2015 at 1:32:47.579965 pm'!
 'Description Please enter a description for this package'!
-!provides: 'MessagePack-Core' 1 0!
+!provides: 'MessagePack-Core' 1 1!
 !classDefinition: #MpError category: #'MessagePack-Core'!
 Error subclass: #MpError
 	instanceVariableNames: 'type'
@@ -250,6 +250,14 @@ bin32
 bin8
 	^16rC4! !
 
+!MpConstants class methodsFor: 'typecodes' stamp: 'MU 5/27/2015 13:25'!
+boolFalse
+	^16rC2! !
+
+!MpConstants class methodsFor: 'typecodes' stamp: 'MU 5/27/2015 13:26'!
+boolTrue
+	^16rC3! !
+
 !MpConstants class methodsFor: 'typecodes' stamp: 'mu 6/23/2011 12:01'!
 double
 	^16rCB! !
@@ -265,10 +273,6 @@ ext32
 !MpConstants class methodsFor: 'typecodes' stamp: 'mu 9/22/2013 00:33'!
 ext8
 	^16rC7! !
-
-!MpConstants class methodsFor: 'typecodes' stamp: 'mu 6/23/2011 12:01'!
-false
-	^16rC2! !
 
 !MpConstants class methodsFor: 'typecodes' stamp: 'mu 8/11/2013 23:54'!
 fixext1
@@ -318,10 +322,6 @@ map16
 map32
 	^16rDF! !
 
-!MpConstants class methodsFor: 'typecodes' stamp: 'mu 6/23/2011 12:02'!
-nil
-	^16rC0! !
-
 !MpConstants class methodsFor: 'typecodes' stamp: 'mu 8/11/2013 23:46'!
 str16
 	^16rDA! !
@@ -333,10 +333,6 @@ str32
 !MpConstants class methodsFor: 'typecodes' stamp: 'mu 8/11/2013 23:48'!
 str8
 	^16rD9! !
-
-!MpConstants class methodsFor: 'typecodes' stamp: 'mu 6/23/2011 12:02'!
-true
-	^16rC3! !
 
 !MpConstants class methodsFor: 'typecodes' stamp: 'mu 6/23/2011 12:02'!
 uint16
@@ -353,6 +349,10 @@ uint64
 !MpConstants class methodsFor: 'typecodes' stamp: 'mu 6/23/2011 12:03'!
 uint8
 	^16rCC! !
+
+!MpConstants class methodsFor: 'typecodes' stamp: 'MU 5/27/2015 13:26'!
+undefinedNil
+	^16rC0! !
 
 !MpDecoder methodsFor: 'stream-like' stamp: 'mu 6/7/2011 17:53'!
 atEnd
@@ -939,9 +939,9 @@ writeExt: data as: type
 	sz < 65536 ifTrue: [^self writeExt16: data as: type].
 	sz < 4294967296 ifTrue: [^self writeExt32: data as: type].! !
 
-!MpEncoder methodsFor: 'writing' stamp: 'mu 4/29/2011 15:24'!
+!MpEncoder methodsFor: 'writing' stamp: 'MU 5/27/2015 13:27'!
 writeFalse: ignore
-	self writeStream nextPut: MpConstants false! !
+	self writeStream nextPut: MpConstants boolFalse! !
 
 !MpEncoder methodsFor: 'writing-fixext' stamp: 'mu 9/22/2013 01:02'!
 writeFixext16: data as: type
@@ -1066,9 +1066,9 @@ writeNegativeFixNum: number
 	val :=  256 + number.
 	self writeStream nextPut: val! !
 
-!MpEncoder methodsFor: 'writing' stamp: 'mu 4/29/2011 15:24'!
+!MpEncoder methodsFor: 'writing' stamp: 'MU 5/27/2015 13:28'!
 writeNil: ignore
-	self writeStream nextPut: MpConstants nil! !
+	self writeStream nextPut: MpConstants undefinedNil! !
 
 !MpEncoder methodsFor: 'dispatching' stamp: 'mu 5/2/2011 14:14'!
 writeObject: anObject 
@@ -1129,9 +1129,9 @@ writeStream: anObject
 writeString: aString
 	self writeStrBytes: aString asByteArray! !
 
-!MpEncoder methodsFor: 'writing' stamp: 'mu 4/29/2011 15:24'!
+!MpEncoder methodsFor: 'writing' stamp: 'MU 5/27/2015 13:28'!
 writeTrue: ignore
-	self writeStream nextPut: MpConstants true! !
+	self writeStream nextPut: MpConstants boolTrue! !
 
 !MpEncoder methodsFor: 'writing-helper' stamp: 'mu 4/29/2011 15:38'!
 writeUint16: value
@@ -1808,9 +1808,9 @@ defineExtsActionsTo: map
 	map at: MpConstants ext16 put: #readExt16.
 	map at: MpConstants ext32 put: #readExt32.! !
 
-!MpDecodeTypeMapper class methodsFor: 'actions for primitives' stamp: 'mu 4/30/2011 22:43'!
+!MpDecodeTypeMapper class methodsFor: 'actions for primitives' stamp: 'MU 5/27/2015 13:27'!
 defineFalseActionTo: map
-	map at: MpConstants false put: #readFalse! !
+	map at: MpConstants boolFalse put: #readFalse! !
 
 !MpDecodeTypeMapper class methodsFor: 'actions for primitives' stamp: 'mu 4/30/2011 22:43'!
 defineFloatActionTo: map
@@ -1828,9 +1828,9 @@ defineMapActionTo: map
 	map at: MpConstants map16 put: #readMap16.
 	map at: MpConstants map32 put: #readMap32.! !
 
-!MpDecodeTypeMapper class methodsFor: 'actions for primitives' stamp: 'mu 4/30/2011 22:43'!
+!MpDecodeTypeMapper class methodsFor: 'actions for primitives' stamp: 'MU 5/27/2015 13:27'!
 defineNilActionTo: map
-	map at: MpConstants nil put: #readNil! !
+	map at: MpConstants undefinedNil put: #readNil! !
 
 !MpDecodeTypeMapper class methodsFor: 'actions for primitives' stamp: 'mu 8/18/2013 22:31'!
 definePrimitivesActionsTo: map
@@ -1851,9 +1851,9 @@ defineStrBytesActionTo: map
 	map at: MpConstants str16 put: #readStr16.
 	map at: MpConstants str32 put: #readStr32.! !
 
-!MpDecodeTypeMapper class methodsFor: 'actions for primitives' stamp: 'mu 4/30/2011 22:43'!
+!MpDecodeTypeMapper class methodsFor: 'actions for primitives' stamp: 'MU 5/27/2015 13:27'!
 defineTrueActionTo: map
-	map at: MpConstants true put: #readTrue! !
+	map at: MpConstants boolTrue put: #readTrue! !
 
 !MpDecodeTypeMapper class methodsFor: 'actions for primitives' stamp: 'mu 4/30/2011 22:46'!
 defineUnsignedIntegerActionTo: map

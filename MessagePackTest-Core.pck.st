@@ -1,7 +1,6 @@
-'From Cuis 4.2 of 25 July 2013 [latest update: #1969] on 29 April 2014 at 10:45:18.976195 pm'!
+'From Cuis 4.2 of 25 July 2013 [latest update: #2336] on 27 May 2015 at 1:32:50.311965 pm'!
 'Description Please enter a description for this package'!
-!provides: 'MessagePackTest-Core' 1 2!
-!requires: 'MessagePack-Core' 1 1 nil!
+!provides: 'MessagePackTest-Core' 1 1!
 !classDefinition: #MpTestCase category: #'MessagePackTest-Core'!
 TestCase subclass: #MpTestCase
 	instanceVariableNames: ''
@@ -256,13 +255,13 @@ testPackUnpackExt
 		
 ! !
 
-!MpPackUnpackTestCase methodsFor: 'testing' stamp: 'mu 5/1/2011 21:39'!
+!MpPackUnpackTestCase methodsFor: 'testing' stamp: 'MU 5/27/2015 13:31'!
 testPackUnpackFalse
 	"self debug: #testPackUnpackFalse"
 	| packed unpacked |
 	packed := false messagePacked.
 	self should: [packed isMemberOf: ByteArray].
-	self should: [packed = (ByteArray with: MpConstants false)].
+	self should: [packed = (ByteArray with: MpConstants boolFalse)].
 	unpacked := Object fromMessagePack: packed.
 	self should: [unpacked = false]
 	
@@ -324,13 +323,13 @@ testPackUnpackMap
 		
 ! !
 
-!MpPackUnpackTestCase methodsFor: 'testing' stamp: 'mu 5/1/2011 21:38'!
+!MpPackUnpackTestCase methodsFor: 'testing' stamp: 'MU 5/27/2015 13:31'!
 testPackUnpackNil
 	"self debug: #testPackUnpackNil"
 	| packed unpacked |
 	packed := nil messagePacked.
 	self should: [packed isMemberOf: ByteArray].
-	self should: [packed = (ByteArray with: MpConstants nil)].
+	self should: [packed = (ByteArray with: MpConstants undefinedNil)].
 	unpacked := Object fromMessagePack: packed.
 	self should: [unpacked = nil]
 	
@@ -366,13 +365,13 @@ testPackUnpackStrBytes
 		
 ! !
 
-!MpPackUnpackTestCase methodsFor: 'testing' stamp: 'mu 5/1/2011 21:39'!
+!MpPackUnpackTestCase methodsFor: 'testing' stamp: 'MU 5/27/2015 13:32'!
 testPackUnpackTrue
 	"self debug: #testPackUnpackTrue"
 	| packed unpacked |
 	packed := true messagePacked.
 	self should: [packed isMemberOf: ByteArray].
-	self should: [packed = (ByteArray with: MpConstants true)].
+	self should: [packed = (ByteArray with: MpConstants boolTrue)].
 	unpacked := Object fromMessagePack: packed.
 	self should: [unpacked = true]
 	

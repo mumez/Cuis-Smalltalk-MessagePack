@@ -1,6 +1,6 @@
-'From Cuis 4.2 of 25 July 2013 [latest update: #2336] on 27 May 2015 at 1:32:47.579965 pm'!
+'From Cuis 4.2 of 25 July 2013 [latest update: #2336] on 27 May 2015 at 1:45:58.178737 pm'!
 'Description Please enter a description for this package'!
-!provides: 'MessagePack-Core' 1 1!
+!provides: 'MessagePack-Core' 1 2!
 !classDefinition: #MpError category: #'MessagePack-Core'!
 Error subclass: #MpError
 	instanceVariableNames: 'type'
@@ -1730,13 +1730,13 @@ bytesAsRaw
 	
 	self isBytesAsString: false! !
 
-!MpDecodeTypeMapper methodsFor: 'decode customization' stamp: 'mu 8/12/2013 00:12'!
+!MpDecodeTypeMapper methodsFor: 'decode customization' stamp: 'mu 5/27/2015 13:44'!
 bytesAsString
 	| map |
 	map := self actionMap.
 	map at: MpConstants str8 put: #readString8.
 	map at: MpConstants str16 put: #readString16.
-	map at: MpConstants str16 put: #readString32.
+	map at: MpConstants str32 put: #readString32.
 	
 	self isBytesAsString: true! !
 
